@@ -19,6 +19,8 @@ Each MCP server runs in its own container with HTTP/SSE endpoints:
 mcp-servers/
 ├── docker-compose.yml          # Orchestrates all services
 ├── data/                       # Shared data directory for filesystem server
+├── test-mcp-servers.py         # Test script for server verification
+├── .modelcontextrc.json        # MCP configuration for Cursor IDE
 ├── filesystem/
 │   └── Dockerfile             # Filesystem server container (mcp-proxy)
 ├── sequential-thinking/
@@ -66,6 +68,55 @@ docker-compose logs -f
 docker-compose down
 ```
 
+### Test server connectivity
+```bash
+python3 test-mcp-servers.py
+```
+
+## Cursor IDE Integration
+
+This project is designed to work with Cursor IDE's MCP (Model Context Protocol) integration.
+
+### Setup for Cursor IDE
+
+1. **Start the MCP servers:**
+   ```bash
+   docker-compose up --build -d
+   ```
+
+2. **Test server connectivity:**
+   ```bash
+   python3 test-mcp-servers.py
+   ```
+
+3. **Configure Cursor IDE:**
+   
+   **Option A: Copy config to home directory**
+   ```bash
+   # macOS/Linux
+   cp .modelcontextrc.json ~/.modelcontextrc.json
+   
+   # Windows
+   copy .modelcontextrc.json %USERPROFILE%\.modelcontextrc.json
+   ```
+   
+   **Option B: Configure in Cursor settings**
+   - Open Cursor IDE
+   - Go to Settings (Cmd/Ctrl + ,)
+   - Search for "MCP" or "Model Context Protocol"
+   - Set config path to your project's `.modelcontextrc.json`
+
+4. **Restart Cursor IDE**
+
+### Available MCP Tools in Cursor
+
+Once configured, Cursor will have access to:
+- **Filesystem operations** (read/write files)
+- **Git operations** (commit, branch, etc.)
+- **Time functions** (current time, timezone info)
+- **HTTP fetch capabilities** (web requests)
+- **Sequential thinking** (step-by-step reasoning)
+
 ## Ports and Endpoints
 
 - **8801**: Filesystem server - `http://localhost:8801/sse`
@@ -91,6 +142,7 @@ All servers provide health check endpoints:
 5. **Docker Best Practices**: Follows containerization best practices
 6. **HTTP/SSE Support**: All servers expose HTTP/SSE endpoints for easy integration
 7. **Mixed Technologies**: Supports both Node.js and Python-based MCP servers
+8. **Cursor IDE Integration**: Ready-to-use with Cursor's MCP features
 
 ## Current Status
 
@@ -104,6 +156,42 @@ All servers provide health check endpoints:
 ⚠️ **Issues:**
 - memory: Executable not found in supergateway container
 - everything: Executable not found in supergateway container
+
+## Troubleshooting
+
+### Server Connection Issues
+
+1. **Check if servers are running:**
+   ```bash
+   docker-compose ps
+   ```
+
+2. **Test server connectivity:**
+   ```bash
+   python3 test-mcp-servers.py
+   ```
+
+3. **Check server logs:**
+   ```bash
+   docker-compose logs
+   ```
+
+4. **Test individual servers:**
+   ```bash
+   curl http://localhost:8801/sse  # filesystem
+   curl http://localhost:8804/health  # git
+   ```
+
+### Cursor IDE Issues
+
+1. **Verify MCP configuration:**
+   - Check Cursor's settings for MCP configuration
+   - Ensure the config file path is correct
+   - Restart Cursor after configuration changes
+
+2. **Check server status:**
+   - Ensure all servers are running before starting Cursor
+   - Use the test script to verify connectivity
 
 ## Next Steps
 
