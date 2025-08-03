@@ -2,8 +2,8 @@ FROM node:20-alpine
 
 RUN apk add --no-cache git
 
-# Install supergateway and clone the servers repository
-RUN npm install -g supergateway \
+# Install mcp-proxy and clone the servers repository
+RUN npm install -g mcp-proxy \
     && git clone https://github.com/modelcontextprotocol/servers.git /tmp/servers \
     && cd /tmp/servers \
     && npm install \
@@ -13,4 +13,4 @@ RUN npm install -g supergateway \
 
 EXPOSE 8802
 
-CMD ["supergateway", "--stdio", "mcp-server-memory", "--port", "8802", "--ssePath", "/sse"] 
+CMD ["mcp-proxy", "--port", "8802", "--sseEndpoint", "/sse", "mcp-server-memory"] 
