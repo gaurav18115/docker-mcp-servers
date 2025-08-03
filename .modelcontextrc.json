@@ -1,0 +1,25 @@
+{
+    "mcpServers": {
+        "filesystem": {
+            "serverUrl": "http://127.0.0.1:8801/sse"
+        },
+        "memory": {
+            "serverUrl": "http://127.0.0.1:8802/sse"
+        },
+        "sequential-thinking": {
+            "serverUrl": "http://127.0.0.1:8803/sse"
+        },
+        "git": {
+            "serverUrl": "http://127.0.0.1:8804/sse"
+        },
+        "time": {
+            "serverUrl": "http://127.0.0.1:8805/sse"
+        },
+        "fetch": {
+            "serverUrl": "http://127.0.0.1:8806/sse"
+        },
+        "everything": {
+            "serverUrl": "http://127.0.0.1:8807/sse"
+        }
+    }
+}

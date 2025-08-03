@@ -1,0 +1,37 @@
+services:
+  filesystem:
+    build: ./filesystem
+    ports:
+      - "8801:8801"
+    volumes:
+      - ./data:/data
+
+  memory:
+    build: ./memory
+    ports:
+      - "8802:8802"
+
+  sequential-thinking:
+    build: ./sequential-thinking
+    ports:
+      - "8803:8803"
+
+  git:
+    build: ./git
+    ports:
+      - "8804:8804"
+
+  time:
+    build: ./time
+    ports:
+      - "8805:8805"
+
+  fetch:
+    build: ./fetch
+    ports:
+      - "8806:8806"
+
+  everything:
+    build: ./everything
+    ports:
+      - "8807:8807"
